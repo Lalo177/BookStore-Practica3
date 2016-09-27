@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html ng-app="bockStore">
+  <head>
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" />
+  </head>
+    
+  <body ng-controller="BockStoreController as store">
+    <nav class="navbar navbar-inverse">
+        <h1 class="text-center">Detalles del pedido</h1>
+    </nav >
+     
+    <aside class=" pull-left thumbnail" style="width:100px; height:400px;">
+        <div class="list-group">
+            <a ui-sref="pedidos" class="list-group-item">Pedidos</a>
+            <a class="list-group-item disabled">Favoritos</a>
+            <a ui-sref="datos" class="list-group-item">Datos</a>
+            <a ui-sref="index" class="list-group-item">Salir</a>
+        </div>
+    </aside> 
+      
+    <section class="col-xs-10" >
+        <table class="table table-hover pull-right col-xs-8" ng-controller="tablaController">
+            <tr>
+                <th>Fecha</th>
+                <th>Num</th> 
+                <th>Pedido</th>
+                <th>Estado</th>
+                <th>Total</th>
+            </tr>
+            <tr  ng-repeat="pedido in tablapedidos">
+                <td>{{pedido.fecha}}</td>
+                <td>
+                    <a ui-sref="detalle({id:pedido.id})">{{pedido.id}}</a>
+                </td> 
+                <td>{{pedido.resumen[0].titulo}} {{pedido.cantidad}}</td>
+                <td>{{pedido.estado}}</td> 
+                <td>{{pedido.total}}</td>
+            </tr>
+        </table>
+        
+        
+    </section>
+      
+      <div ng-controller="detalleController">
+          <div class="pull-left thumbnail">
+            <h2 >Pedido #{{ pedidos.id }}</h2>
+            <h4>Fecha</h4>
+            <p>{{ pedidos.fecha }}</p>
+            <h4>ID</h4>
+            <p>#{{ pedidos.id }}</p>
+            <h4>Usuario</h4>
+            <p>{{store.usuario.nombre}}</p>
+            <a>{{store.usuario.email}}</a> 
+            <h4>Direccion</h4>
+            <p>{{store.usuario.direccion}}({{store.usuario.ciudad}}/{{store.usuario.pais}})</p><br> 
+          </div>
+          
+          <div>
+              <table class="col-xs-6"  >
+                  <tr>
+                    <th >Libro</th>
+                    <th ></th>
+                    <th >Cantidad</th>
+                    <th  >Total</th>
+                  </tr>
+ 
+                  <tr>
+                    <td style="width:180px; height:300px;"><img ng-src="{{pedidos.resumen[3].img}}" /></td>
+                    <td class="text-left" valign="top"><h3>{{pedidos.resumen[0].titulo}}</h3>
+                        {{pedidos.resumen[1].autor}}<br>
+                        {{pedidos.resumen[2].editorial}}
+                    </td >
+                    <td valign="top"><br><br>{{pedidos.cantidad}} X {{pedidos.resumen[4].precio | currency}}</td>
+                    <td valign="top"><br><br>{{pedidos.total | currency}}</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td><h4>{{pedidos.estado}}</h4></td>
+                    <td>{{pedidos.total | currency}}</td>
+              </table>
+          </div>
+      </div>
+    
+  </body>
+</html>
